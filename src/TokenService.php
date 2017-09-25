@@ -4,6 +4,7 @@ namespace Kerwinzc\EasyAuth;
 
 class TokenService
 {
+    use ApiResponse;
 
     public function make($key)
     {
@@ -30,14 +31,14 @@ class TokenService
         $value = cache($token);
 
         if (empty( $value )) {
-            return error_default_return('060001', 'token不存在');
+            return $this->setCode('060001')->setMsg('token不存在')->respond();
         }
 
         $cache_key = easy_auth_get_cache_key($value['key']);
         $key_token = cache($cache_key);
 
         if ($key_token != $token && config('easyauth.request.api_check_only')) {
-            return error_default_return('060002', '账号在另一地点登录');
+            return $this->setCode('060002')->setMsg('账号在另一地点登录')->respond();
         }
 
         return $value;

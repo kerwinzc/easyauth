@@ -4,6 +4,7 @@ namespace Kerwinzc\EasyAuth;
 
 class SignService
 {
+    use ApiResponse;
 
     public function make($data)
     {
@@ -28,13 +29,13 @@ class SignService
         $sign = $this->make($data);
 
         if ($sign !== $data['sign']) {
-            return easy_auth_error_return('060003', '签名验证失败');
+            return $this->setCode('060003')->setMsg('签名验证失败')->respond();
         }
 
         $request_sign = $token_value['sign'];
 
         if ($request_sign == $sign) {
-            return error_default_return('060004', '请求过于频繁');
+            return $this->setCode('060004')->setMsg('请求过于频繁')->respond();
         }
 
         easy_auth_cache_token($token_value['key'], $data['sign'], $data['token']);

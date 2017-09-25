@@ -20,18 +20,18 @@ class Check
 
         $result_token = app('easyauth')->check($data['token'] ?? '');
 
-        if ( ! empty( $result_token['code'] )) {
-            exit( json_encode($result_token) );
+        if (is_object($result_token)) {
+            return $result_token;
         }
 
-        $user = app('easyauth.sign')->check($data, $result_token);
+        $user_id = app('easyauth.sign')->check($data, $result_token);
 
-        if ( ! empty( $user['code'] )) {
-            exit( json_encode($user) );
+        if (is_object($user_id)) {
+            return $user_id;
         }
 
         $request->attributes->add([
-            'user_id' => $user,
+            'user_id' => $user_id,
         ]);
 
         return $next($request);
