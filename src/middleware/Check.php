@@ -16,6 +16,14 @@ class Check
      */
     public function handle($request, Closure $next)
     {
+    	if(config('easyauth.request.api_debug')) {
+    		$request->attributes->add([
+	            'user_id' => config('easyauth.request.api_debug_user_id'),
+	        ]);
+
+	        return $next($request);
+    	}
+
         $data = $request->input();      // 获取所有请求参数
 
         $result_token = app('easyauth')->check($data['token'] ?? '');

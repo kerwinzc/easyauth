@@ -9,6 +9,10 @@ return [
         'token_expired'    => 10080,
         // 是否开启单点登录
         'api_check_only'   => false,
+        // 是否开启调试模式
+        'api_debug' => false,
+        // 调试模式传入user_id
+        'api_debug_user_id' => 1,
     ],
 
 ];
