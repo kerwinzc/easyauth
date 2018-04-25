@@ -45,6 +45,23 @@ $token = app('easyauth')->make($user_id);
 ```
 
 #### 使用签名验证中间件
+
+客户端签名生成规则
+```
+ksort(request()->input());
+
+$string = '';
+foreach ($data as $key => $value) {
+    $string .= $key . '=' . $value . '&';
+}
+
+$salt = 'config中定义的api_request_salt盐值';
+$string .= $salt;
+
+$sign = md5($string);
+// 发送数据中添加签名sign字段为$sign
+```
+
 前往`app/Http/Kernel.php`中注册中间件
 ```
 protected $routeMiddleware = [
