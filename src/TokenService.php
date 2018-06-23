@@ -19,7 +19,7 @@ class TokenService
     {
         $token = md5(uniqid());
 
-        if ( ! empty( cache($token) )) {
+        if ( ! empty(cache($token))) {
             return $this->generate_token();
         }
 
@@ -30,7 +30,7 @@ class TokenService
     {
         $value = cache($token);
 
-        if (empty( $value )) {
+        if (empty($value)) {
             return $this->setCode('060001')->setMsg('token不存在')->respond();
         }
 

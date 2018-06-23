@@ -4,7 +4,7 @@ namespace Kerwinzc\EasyAuth\Middleware;
 
 use Closure;
 
-class Check
+class TokenCheck
 {
     /**
      * Handle an incoming request.
@@ -16,15 +16,15 @@ class Check
      */
     public function handle($request, Closure $next)
     {
-    	if(config('easyauth.request.api_debug')) {
-    		$request->attributes->add([
-	            'user_id' => config('easyauth.request.api_debug_user_id'),
-	        ]);
+        if (config('easyauth.request.api_debug')) {
+            $request->attributes->add([
+                'user_id' => config('easyauth.request.api_debug_user_id'),
+            ]);
 
-	        return $next($request);
-    	}
+            return $next($request);
+        }
 
-        $data = $request->input();      // 获取所有请求参数
+        $data = $request->input();
 
         $result_token = app('easyauth')->check($data['token'] ?? '');
 
@@ -32,7 +32,7 @@ class Check
             return $result_token;
         }
 
-        $user_id = app('easyauth.sign')->check($data, $result_token);
+        $user_id = app('easyauth.sign')->token_save($data, $result_token);
 
         if (is_object($user_id)) {
             return $user_id;

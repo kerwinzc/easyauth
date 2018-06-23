@@ -44,5 +44,4 @@ class ServiceProvider extends LaravelServiceProvider
         });
     }
 
-
 }

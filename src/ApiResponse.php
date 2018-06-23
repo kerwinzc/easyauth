@@ -15,7 +15,7 @@ trait ApiResponse
 
     protected $errorMsg = 'server exception, try again later.';
 
-    protected $data = [ ];
+    protected $data = [];
 
     public function __construct()
     {

@@ -16,7 +16,7 @@ class SignService
             $string .= $key . '=' . $value . '&';
         }
 
-        $salt = config('easyauth.request.api_request_salt');
+        $salt   = config('easyauth.request.api_request_salt');
         $string .= $salt;
 
         $sign = md5($string);
@@ -24,21 +24,25 @@ class SignService
         return $sign;
     }
 
-    public function check($data, $token_value)
+    public function sign_check($data)
     {
         $sign = $this->make($data);
 
-        if ($sign !== $data['sign']) {
+        if ($sign !== array_get($data, 'sign')) {
+
             return $this->setCode('060003')->setMsg('签名验证失败')->respond();
         }
 
-        $request_sign = $token_value['sign'];
+        return $sign;
+    }
 
-        if ($request_sign == $sign) {
+    public function token_save($data, $token_value)
+    {
+        if (array_get($data, 'sign') == $token_value['sign']) {
             return $this->setCode('060004')->setMsg('请求过于频繁')->respond();
         }
 
-        easy_auth_cache_token($token_value['key'], $data['sign'], $data['token']);
+        easy_auth_cache_token($token_value['key'], array_get($data, 'sign'), array_get($data, 'token'));
 
         return $token_value['key'];
     }
