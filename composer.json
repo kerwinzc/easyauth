@@ -20,5 +20,12 @@
         "files": [
             "helpers/functions.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kerwinzc\\EasyAuth\\ServiceProvider::class"
+            ]
+        }
     }
 }
