@@ -13,7 +13,7 @@
         "php": ">=7.0",
         "illuminate/support": "~5"
     },
-    "autoload": { 
+    "autoload": {
         "psr-4": {
             "Kerwinzc\\EasyAuth\\": "src/"
         },
@@ -24,7 +24,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kerwinzc\\EasyAuth\\ServiceProvider::class"
+                "Kerwinzc\\EasyAuth\\ServiceProvider"
             ]
         }
     }
